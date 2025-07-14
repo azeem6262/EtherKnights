@@ -21,6 +21,14 @@ function Listing() {
     }
   };
 
+  // Helper function to convert IPFS URI to HTTP gateway URL
+  const convertIPFSToHTTP = (ipfsUri) => {
+    if (ipfsUri.startsWith("ipfs://")) {
+      return ipfsUri.replace("ipfs://", "https://gateway.pinata.cloud/ipfs/");
+    }
+    return ipfsUri;
+  };
+
   const fetchOwnedNFTs = async () => {
     if (!account) return;
     setLoading(true);
@@ -29,26 +37,31 @@ function Listing() {
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
 
-      const balance = await contract.balanceOf(account);
+      const totalSupply = await contract.totalSupply();
       const nfts = [];
 
-      for (let i = 0; i < balance; i++) {
-        const tokenId = await contract.tokenOfOwnerByIndex(account, i);
-        const tokenURI = await contract.tokenURI(tokenId);
+      for (let tokenId = 21; tokenId <= totalSupply; tokenId++) {
+        try {
+          const owner = await contract.ownerOf(tokenId);
+          if (owner.toLowerCase() === account.toLowerCase()) {
+            const tokenURI = await contract.tokenURI(tokenId);
+            const response = await fetch(convertIPFSToHTTP(tokenURI));
+            if (!response.ok) throw new Error("Metadata fetch failed");
+            const metadata = await response.json();
 
-        // Fetch metadata from IPFS or any other URL
-        const response = await fetch(tokenURI);
-        const metadata = await response.json();
-
-        nfts.push({
-          id: tokenId.toString(),
-          image: metadata.image,
-          name: metadata.name || `Token #${tokenId}`,
-          description: metadata.description || "",
-        });
+            nfts.push({
+              id: tokenId.toString(),
+              image: convertIPFSToHTTP(metadata.image),
+              name: metadata.name || `Token #${tokenId}`,
+              description: metadata.description || "",
+            });
+          }
+        } catch (err) {
+          console.log(`Skipping token ${tokenId}:`, err.message);
+        }
       }
 
-      setOwnedNFTs(nfts);
+      setOwnedNFTs(nfts.sort((a, b) => parseInt(a.id) - parseInt(b.id)));
     } catch (err) {
       console.error("Error fetching NFTs:", err);
       alert("Failed to fetch NFTs.");
@@ -58,9 +71,11 @@ function Listing() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-900 text-white px-6 py-8">
-      <Navbar />
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-zinc-900 text-white">
+      <div className="ml-16">
+        <Navbar />
+      </div>
+      <div className="max-w-6xl mx-auto mt-10">
         <h1 className="text-3xl font-bold mb-4">My NFT Listings</h1>
 
         {!account ? (
@@ -72,6 +87,7 @@ function Listing() {
           </button>
         ) : (
           <>
+            <p className="text-zinc-400 mb-4">Connected: {account}</p>
             <button
               onClick={fetchOwnedNFTs}
               className="px-6 py-2 mt-4 bg-green-500 text-black font-semibold rounded-md hover:bg-green-600 transition"
@@ -82,22 +98,28 @@ function Listing() {
             {loading ? (
               <p className="mt-4 text-zinc-400">Fetching your NFTs...</p>
             ) : ownedNFTs.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-6">
                 {ownedNFTs.map((nft) => (
                   <div
                     key={nft.id}
-                    className="bg-zinc-800 rounded-lg p-4 shadow-lg hover:shadow-zinc-400/20 transition-transform hover:scale-105"
+                    className="bg-zinc-800 rounded-xl overflow-hidden border border-zinc-700 hover:shadow-lg transition-transform hover:scale-105"
                   >
-                    <Image
-                      src={nft.image}
-                      alt={nft.name}
-                      width={300}
-                      height={300}
-                      className="rounded-md mb-4 object-cover w-full h-[200px]"
-                    />
-                    <h3 className="text-xl font-semibold">{nft.name}</h3>
-                    <p className="text-zinc-400 text-sm mt-1">{nft.description}</p>
-                    <p className="text-zinc-500 text-xs mt-2">Token ID: #{nft.id}</p>
+                    <div className="relative h-[200px] w-full">
+                      <Image
+                        src={nft.image}
+                        alt={nft.name}
+                        fill
+                        className="object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = "/fallback.png";
+                        }}
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-lg font-bold text-white">{nft.name}</h3>
+                      <p className="text-sm text-zinc-400 mt-1">{nft.description}</p>
+                      <p className="text-xs text-zinc-500 mt-2">Token ID: #{nft.id}</p>
+                    </div>
                   </div>
                 ))}
               </div>

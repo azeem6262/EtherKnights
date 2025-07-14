@@ -38,7 +38,7 @@ export default function Navbar({transparent = false}){
             <input  
               className="p-2 w-full bg-zinc-700 rounded-tl-xl rounded-bl-xl focus:outline-none"
               type="text"
-              placeholder="Search RareTrade..."
+              placeholder="Search EtherKnights..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />

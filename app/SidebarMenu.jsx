@@ -10,7 +10,7 @@ export default function SidebarMenu() {
       <div className="flex items-center gap-2 text-xl font-bold mb-6">
         <Link href="/" className="flex items-center gap-2">
           <Panda className="w-6 h-6" />
-          <span className="hidden group-hover:inline">RareTrade</span>
+          <span className="hidden group-hover:inline">EtherKnights</span>
         </Link>
       </div>
 
