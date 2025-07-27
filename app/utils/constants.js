@@ -1,7 +1,7 @@
-export const CONTRACT_ADDRESS = "0x65c62232675d0668338362d85ce97507269ae0a7";
+export const CONTRACT_ADDRESS = "0x5622968b80a50bbf6363bd8dd5f3c3e4896b3b3c";
 
 export const CONTRACT_ABI = [
-	
+
 	{
 		"inputs": [
 			{
@@ -633,6 +633,7 @@ export const CONTRACT_ABI = [
 		"stateMutability": "view",
 		"type": "function"
 	}
+
 
 
 ];
