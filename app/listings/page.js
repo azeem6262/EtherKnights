@@ -104,7 +104,7 @@ function Listing() {
                     key={nft.id}
                     className="bg-zinc-800 rounded-xl overflow-hidden border border-zinc-700 hover:shadow-lg transition-transform hover:scale-105"
                   >
-                    <div className="relative h-[200px] w-full">
+                    <div className="relative h-[350px] w-full">
                       <Image
                         src={nft.image}
                         alt={nft.name}

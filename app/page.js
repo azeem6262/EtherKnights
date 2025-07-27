@@ -15,6 +15,12 @@ function Page() {
     "/forBanner3.jpg",
     "/forBanner4.jpg",
   ];
+  const hotItems = [
+  { id:1, src: "/game.jpg", name: "Pixel Wars 15164", price: "0.05 ETH" },
+  { id:2, src: "/alien.jpg", name: "Strange Guy 6748", price: "0.12 ETH" },
+  { id:3, src: "/dog.jpg", name: "Crypdog 3456", price: "0.03 ETH" },
+  { id:4, src: "/record.jpg", name: "Record 1537", price: "0.08 ETH" },
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,23 +43,26 @@ function Page() {
             <Image
               src={bannerImages[currentIndex]}
               alt={`Slide ${currentIndex + 1}`}
-              layout="fill"
-              objectFit="cover"
+              fill
+              style={{objectFit:"cover"}}
               className="z-0"
             />
             <div className="absolute inset-0 bg-opacity-40 backdrop-blur-sm z-10" />
             <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
-              <h1 className="text-5xl font-bold text-white mb-4 drop-shadow-md">
+              <div className="p-4 backdrop-blur-md bg-zinc-100/30 rounded-2xl items-center flex flex-col transition-transform transform hover:scale-101">
+              <h1 className="text-5xl font-bold text-zinc-900 mb-4 drop-shadow-md">
                 Discover, Collect & Sell Rare NFTs
               </h1>
-              <p className="text-zinc-300 mb-6 text-lg max-w-2xl drop-shadow-sm">
+              <p className="text-zinc-900 mb-6 text-lg max-w-2xl drop-shadow-sm">
                 A decentralized marketplace for digital collectibles and creative assets.
               </p>
+              
               <Link href='/nftPage'>
               <button className="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-md text-black font-semibold transition">
                 Explore Marketplace
               </button>
               </Link>
+              </div>
             </div>
           </div>
 
@@ -73,25 +82,25 @@ function Page() {
                   title: "Larvva Lads",
                   price: "< 0.01 ETH",
                   change: "+23%",
-                  logo: "/larvva.png",
+                  logo: "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGxvZ298ZW58MHx8MHx8fDA%3D",
                 },
                 {
                   title: "Lamborghini & Wilder",
                   price: "–",
                   change: "",
-                  logo: "/lamborghini.png",
+                  logo: "https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 },
                 {
                   title: "Courtyard.io",
                   price: "< 0.01 WETH",
                   change: "-12.1%",
-                  logo: "/courtyard.png",
+                  logo: "https://images.unsplash.com/photo-1602934445884-da0fa1c9d3b3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGxvZ298ZW58MHx8MHx8fDA%3D",
                 },
                 {
                   title: "NBA Top Shot",
                   price: "0.93 FLOW",
                   change: "-1.8%",
-                  logo: "/nba.png",
+                  logo: "https://images.unsplash.com/photo-1612222869049-d8ec83637a3c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGxvZ298ZW58MHx8MHx8fDA%3D",
                 },
               ].map((item, index) => (
                 <div
@@ -135,7 +144,7 @@ function Page() {
                 <div className="rounded-2xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg hover:shadow-zinc-400/20">
                   <Image
                     className="w-full h-48 object-cover"
-                    src="/possessed-photography-lxoq0zppH5w-unsplash.jpg"
+                    src="/featured1.jpg"
                     width={300}
                     height={300}
                     alt="First collection."
@@ -159,20 +168,25 @@ function Page() {
             <h3 className="text-zinc-400 mb-10">This week's curated and handpicked drops.</h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              {[1, 2, 3, 4].map((item) => (
+              {hotItems.map((item) => (
                 <div
-                  key={item}
+                  key={item.id}
                   className="bg-zinc-800 rounded-2xl overflow-hidden hover:shadow-lg hover:shadow-zinc-400/20 transition-transform transform hover:scale-105"
                 >
-                  <div className="h-48 bg-zinc-700 flex items-center justify-center">
-                    <span className="text-zinc-500">NFT #{item}</span>
+                  <div className="relative h-68 bg-zinc-700 flex items-center justify-center">
+                    <Image
+                      src={item.src}
+                      alt="NFT preview"
+                      fill
+                      style={{ objectFit: "cover" }}
+                   />
                   </div>
                   <div className="p-4">
-                    <h4 className="text-white font-semibold">NFT Name</h4>
-                    <p className="text-zinc-400 text-sm">0.05 ETH</p>
+                    <h4 className="text-white font-semibold">{item.name}</h4>
+                    <p className="text-zinc-400 text-sm">{item.price}</p>
                   </div>
                 </div>
-              ))}
+              ))} 
             </div>
           </div>
           {/* 🎨 How NFTs Work & Why They Matter Section */}

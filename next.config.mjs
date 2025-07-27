@@ -5,7 +5,9 @@ const nextConfig = {
       'api.dicebear.com',
       'gateway.pinata.cloud',
       'ipfs.io',
-      'cloudflare-ipfs.com'
+      'cloudflare-ipfs.com',
+      'images.unsplash.com',
+      'dweb.link',
     ],
   },
 };

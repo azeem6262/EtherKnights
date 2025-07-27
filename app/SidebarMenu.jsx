@@ -28,7 +28,7 @@ export default function SidebarMenu() {
           </Link>
         </li>
         <li>
-          <Link href="/buy" className="flex items-center gap-3 hover:underline">
+          <Link href='/nftPage' className="flex items-center gap-3 hover:underline">
             <ShoppingCart className="w-5 h-5" />
             <span className="hidden group-hover:inline">Marketplace</span>
           </Link>

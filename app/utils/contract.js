@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-const CONTRACT_ADDRESS = "0xf768a6be49da71389cc25b3771f22a8b80b1887d";
+const CONTRACT_ADDRESS = "0x65c62232675d0668338362d85ce97507269ae0a7";
 const CONTRACT_ABI = [
 	
 	{
