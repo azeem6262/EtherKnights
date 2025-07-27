@@ -1,5 +1,5 @@
 "use client";
-import SidebarMenu from "./Sidebarmenu";
+import SidebarMenu from "./SidebarMenu";
 import Navbar from "./Navbar";
 import { useState, useEffect } from "react";
 import Image from "next/image";

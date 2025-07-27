@@ -1,6 +1,6 @@
 import { IBM_Plex_Mono } from "next/font/google";
 import "../globals.css";
-import SidebarMenu from "../Sidebarmenu";
+import SidebarMenu from "../SidebarMenu";
 
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
