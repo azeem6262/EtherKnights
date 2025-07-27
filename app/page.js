@@ -27,7 +27,7 @@ function Page() {
       setCurrentIndex((prev) => (prev + 1) % bannerImages.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [bannerImages.length]);
 
   return (
     <div className="flex min-h-screen flex-col relative bg-zinc-900 text-white">
@@ -165,7 +165,7 @@ function Page() {
           {/* 🔥 Hot Today Section */}
           <div className="w-full py-16 px-6 bg-zinc-900">
             <h1 className="text-3xl font-bold mb-2">Hot Today!</h1>
-            <h3 className="text-zinc-400 mb-10">This week's curated and handpicked drops.</h3>
+            <h3 className="text-zinc-400 mb-10">This week&#39;s curated and handpicked drops.</h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
               {hotItems.map((item) => (
@@ -194,7 +194,7 @@ function Page() {
   <div className="max-w-6xl mx-auto">
     <h2 className="text-4xl font-bold text-center mb-6">How NFTs Work & Why They Matter</h2>
     <p className="text-center text-zinc-400 max-w-3xl mx-auto mb-12">
-      NFTs (Non-Fungible Tokens) represent ownership of unique digital assets on the blockchain. Here's how the journey from creation to trading unfolds:
+      NFTs (Non-Fungible Tokens) represent ownership of unique digital assets on the blockchain. Here&#39;s how the journey from creation to trading unfolds:
     </p>
 
     {/* Steps Grid */}
